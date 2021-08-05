@@ -6,7 +6,6 @@ export default class Discount extends BaseModel {
   id!: number;
   minProducts!: number;
   value!: number;
-  productsQuantity!: number;
   type!: string;
 
   productId?: Product;
