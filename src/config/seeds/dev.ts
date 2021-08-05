@@ -14,14 +14,12 @@ export async function seed(knex: Knex): Promise<void> {
       id: 1,
       min_item_quantity: 2,
       value: 1,
-      apply_quantity: 0.5,
       type: 'ONLY_MIN_QUANTITY',
     },
     {
       id: 2,
       min_item_quantity: 3,
       value: 0.25,
-      apply_quantity: 1,
       type: 'FROM_MIN_QUANTITY',
     },
   ]);*/
