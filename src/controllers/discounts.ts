@@ -31,8 +31,7 @@ export default class DiscountController {
         break;
       case 'ONLY_MIN_QUANTITY':
         totalDiscount =
-          individualDiscount *
-          (itemsQuantity - (itemsQuantity % discount.minItems));
+          individualDiscount * Math.floor(itemsQuantity / discount.minItems);
         break;
       default:
         totalDiscount = 0;
