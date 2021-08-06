@@ -2,15 +2,13 @@ import { Model } from 'objection';
 import BaseModel from './baseModel';
 import Discount from './discounts';
 
-export default class Product extends BaseModel {
+export default class Item extends BaseModel {
   id!: number;
   code!: string;
   name!: string;
   price!: number;
 
-  discounts?: Discount[];
-
-  static tableName = 'products';
+  static tableName = 'items';
 
   static jsonSchema = {
     type: 'object',
@@ -29,7 +27,7 @@ export default class Product extends BaseModel {
       relation: Model.HasManyRelation,
       modelClass: Discount,
       join: {
-        from: 'products.id',
+        from: 'items.id',
         to: 'discounts.productId',
       },
     },

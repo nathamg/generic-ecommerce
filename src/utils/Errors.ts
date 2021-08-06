@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-class APIError {
+export class APIError {
   httpCode: number;
   description: string;
   message: string;

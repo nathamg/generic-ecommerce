@@ -1,9 +1,9 @@
-import Product from '../models/products';
+import Item from '../models/items';
 import Discount from '../models/discounts';
 
 export default class DiscountController {
   async getDiscountByProduct(
-    product: Product,
+    product: Item,
     productsQuantity: number
   ): Promise<number> {
     let discountValue = 0;

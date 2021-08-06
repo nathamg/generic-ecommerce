@@ -1,28 +1,28 @@
 import { Model } from 'objection';
 import BaseModel from './baseModel';
-import Product from './products';
+import Item from './items';
 
 export default class Basket extends BaseModel {
   id!: number;
   creationDate!: string;
   priceTotal!: number;
 
-  products?: Product[];
+  products?: Item[];
 
   static tableName = 'baskets';
 
   static relationMappings = () => ({
     products: {
       relation: Model.ManyToManyRelation,
-      modelClass: Product,
+      modelClass: Item,
       join: {
         from: 'baskets.id',
         through: {
-          from: 'baskets_products.basketId',
-          to: 'baskets_products.productId',
-          extra: ['productQuantity'],
+          from: 'baskets_items.basketId',
+          to: 'baskets_items.productId',
+          extra: ['itemsQuantity'],
         },
-        to: 'products.id',
+        to: 'items.id',
       },
     },
   });

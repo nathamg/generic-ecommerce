@@ -1,6 +1,6 @@
 import { Model } from 'objection';
 import BaseModel from './baseModel';
-import Product from './products';
+import Item from './items';
 
 export default class Discount extends BaseModel {
   id!: number;
@@ -8,17 +8,17 @@ export default class Discount extends BaseModel {
   value!: number;
   type!: string;
 
-  productId?: Product;
+  itemId?: Item;
 
   static tableName = 'discounts';
 
   static relationMappings = () => ({
     product: {
       relation: Model.BelongsToOneRelation,
-      modelClass: Product,
+      modelClass: Item,
       join: {
         from: 'discount.productId',
-        to: 'product.id',
+        to: 'items.id',
       },
     },
   });

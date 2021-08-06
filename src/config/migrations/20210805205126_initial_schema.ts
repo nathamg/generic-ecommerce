@@ -2,44 +2,36 @@ import { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema
-    .createTableIfNotExists('products', (table) => {
+    .createTable('items', (table) => {
       table.increments('id').primary();
       table.string('name');
       table.string('code');
       table.double('price').unsigned();
     })
-    .createTableIfNotExists('discounts', (table) => {
+    .createTable('discounts', (table) => {
       table.increments('id').primary();
-      table.integer('minProducts').unsigned();
+      table.integer('minItems').unsigned();
       table.double('value').unsigned();
-      table.double('productsQuantity').unsigned();
       table.string('type');
-      table
-        .integer('productId')
-        .unsigned()
-        .references('id')
-        .inTable('products');
+      table.integer('itemId').unsigned().references('id').inTable('items');
     })
-    .createTableIfNotExists('baskets', (table) => {
+    .createTable('baskets', (table) => {
       table.increments('id').primary();
       table.double('totalPrice').unsigned();
       table.date('creationDate');
     })
-    .createTableIfNotExists('baskets_products', (table) => {
+    .createTable('baskets_items', (table) => {
       table.increments('id').primary();
-      table
-        .integer('productId')
-        .unsigned()
-        .references('id')
-        .inTable('products');
+      table.integer('itemId').unsigned().references('id').inTable('items');
       table.integer('basketId').unsigned().references('id').inTable('baskets');
-      table.integer('productQuantity').unsigned();
+      table.integer('itemsQuantity').unsigned();
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema
-    .dropTableIfExists('products')
+    .dropTableIfExists('baskets_items')
     .dropTableIfExists('discounts')
+    .dropTableIfExists('items')
     .dropTableIfExists('baskets');
 }
