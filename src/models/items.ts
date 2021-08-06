@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import BaseModel from './baseModel';
+import Basket from './basket';
 import Discount from './discounts';
 
 export default class Item extends BaseModel {
@@ -28,7 +29,20 @@ export default class Item extends BaseModel {
       modelClass: Discount,
       join: {
         from: 'items.id',
-        to: 'discounts.productId',
+        to: 'discounts.itemId',
+      },
+    },
+    baskets: {
+      relation: Model.ManyToManyRelation,
+      modelClass: Basket,
+      join: {
+        from: 'items.id',
+        through: {
+          from: 'baskets_items.itemId',
+          to: 'baskets_items.basketsId',
+          extra: ['itemsQuantity'],
+        },
+        to: 'baskets.id',
       },
     },
   });

@@ -22,11 +22,39 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/:basketId/products', async (req, res) => {
-  res.status(StatusCodes.NOT_IMPLEMENTED);
+  const { params, body } = req;
+  try {
+    await basketController.addProductToBasket(
+      params.basketId,
+      body.itemId,
+      body.itemsQuantity
+    );
+    res.status(StatusCodes.OK).end();
+  } catch (error) {
+    if (error instanceof APIError) {
+      res.status(error.httpCode).json(error);
+    } else {
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .send('Internal server error');
+    }
+  }
 });
 
 router.get('/:basketId/checkout', async (req, res) => {
-  res.status(StatusCodes.NOT_IMPLEMENTED);
+  try {
+    const checkout = await basketController.checkoutBasket(req.params.basketId);
+    res.status(StatusCodes.OK).json(checkout);
+  } catch (error) {
+    console.log(error);
+    if (error instanceof APIError) {
+      res.status(error.httpCode).json(error);
+    } else {
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .send('Internal server error');
+    }
+  }
 });
 
 router.delete('/:basketId', async (req, res) => {

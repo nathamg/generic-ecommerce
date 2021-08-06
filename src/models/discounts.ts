@@ -4,20 +4,19 @@ import Item from './items';
 
 export default class Discount extends BaseModel {
   id!: number;
-  minProducts!: number;
+  minItems!: number;
   value!: number;
   type!: string;
-
   itemId?: Item;
 
   static tableName = 'discounts';
 
   static relationMappings = () => ({
-    product: {
+    item: {
       relation: Model.BelongsToOneRelation,
       modelClass: Item,
       join: {
-        from: 'discount.productId',
+        from: 'discount.itemId',
         to: 'items.id',
       },
     },

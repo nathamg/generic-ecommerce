@@ -7,19 +7,17 @@ export default class Basket extends BaseModel {
   creationDate!: string;
   totalPrice!: number;
 
-  products?: Item[];
-
   static tableName = 'baskets';
 
   static relationMappings = () => ({
-    products: {
+    items: {
       relation: Model.ManyToManyRelation,
       modelClass: Item,
       join: {
         from: 'baskets.id',
         through: {
           from: 'baskets_items.basketId',
-          to: 'baskets_items.productId',
+          to: 'baskets_items.itemId',
           extra: ['itemsQuantity'],
         },
         to: 'items.id',

@@ -10,6 +10,7 @@ const knex = Knex(knexConfig.development);
 Model.knex(knex);
 
 const app = express();
+app.use(express.json());
 
 app.use('/items', itemRouter);
 app.use('/baskets', basketRouter);

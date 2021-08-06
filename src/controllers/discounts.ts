@@ -3,20 +3,16 @@ import Discount from '../models/discounts';
 
 export default class DiscountController {
   async getDiscountByProduct(
-    product: Item,
-    productsQuantity: number
+    item: Item,
+    itemsQuantity: number
   ): Promise<number> {
     let discountValue = 0;
-    const [discount] = await Discount.relatedQuery('product').where(
-      'productId',
-      product.id
-    );
-
-    if (discount && (discount as Discount).minProducts <= productsQuantity) {
+    const [discount] = await Item.relatedQuery('discounts').for(item.id);
+    if (discount && (discount as Discount).minItems <= itemsQuantity) {
       discountValue = this.calculateDiscount(
         discount as Discount,
-        product.price,
-        productsQuantity
+        item.price,
+        itemsQuantity
       );
     }
     return discountValue;
@@ -24,19 +20,19 @@ export default class DiscountController {
 
   private calculateDiscount(
     discount: Discount,
-    productPrice: number,
-    productsQuantity: number
+    itemPrice: number,
+    itemsQuantity: number
   ): number {
     let totalDiscount: number;
-    const individualDiscount = productPrice * discount.value;
+    const individualDiscount = itemPrice * discount.value;
     switch (discount.type) {
       case 'FROM_MIN_QUANTITY':
-        totalDiscount = individualDiscount * productsQuantity;
+        totalDiscount = individualDiscount * itemsQuantity;
         break;
       case 'ONLY_MIN_QUANTITY':
         totalDiscount =
           individualDiscount *
-          (productsQuantity - (productsQuantity % discount.minProducts));
+          (itemsQuantity - (itemsQuantity % discount.minItems));
         break;
       default:
         totalDiscount = 0;
