@@ -5,7 +5,7 @@ import Item from './items';
 export default class Basket extends BaseModel {
   id!: number;
   creationDate!: string;
-  priceTotal!: number;
+  totalPrice!: number;
 
   products?: Item[];
 
