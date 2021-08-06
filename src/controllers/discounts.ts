@@ -1,4 +1,4 @@
-import Product from 'src/models/products';
+import Product from '../models/products';
 import Discount from '../models/discounts';
 
 export default class DiscountController {
